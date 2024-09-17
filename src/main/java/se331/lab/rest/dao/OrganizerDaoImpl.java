@@ -1,6 +1,10 @@
 package se331.lab.rest.dao;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import se331.lab.rest.entity.Organizer;
 
@@ -8,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-
+@Profile("manual")
 public class OrganizerDaoImpl implements OrganizerDao {
     List<Organizer> organizerList;
 
@@ -52,15 +56,23 @@ public class OrganizerDaoImpl implements OrganizerDao {
     }
 
     @Override
-    public List<Organizer> getAllOrganizers(Integer ItemNo, Integer pageNo) {
+    public Page<Organizer> getAllOrganizers(Integer ItemNo, Integer pageNo) {
         ItemNo = ItemNo==null? organizerList.size(): ItemNo;
         pageNo = pageNo == null? 1: pageNo;
         int firstIndex = (pageNo - 1) * ItemNo;
-        return organizerList.subList(firstIndex,firstIndex+ItemNo);
+        return new
+                PageImpl<Organizer>(organizerList.subList(firstIndex,firstIndex+ItemNo), PageRequest.of(pageNo,ItemNo),organizerList.size());
     }
 
     @Override
     public Integer getOrganizerSize() {
         return organizerList.size();
+    }
+
+    @Override
+    public Organizer createOrganizer(Organizer organizer) {
+        organizer.setId(organizerList.get(organizerList.size()-1).getId()+1);
+        organizerList.add(organizer);
+        return organizer;
     }
 }

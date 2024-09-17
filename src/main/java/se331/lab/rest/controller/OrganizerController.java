@@ -2,13 +2,12 @@ package se331.lab.rest.controller;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se331.lab.rest.entity.Event;
 import se331.lab.rest.entity.Organizer;
@@ -25,18 +24,12 @@ public class OrganizerController {
      public ResponseEntity<?> getAllOrganizers(@RequestParam(value ="_limit",required = false) Integer itemNo,
                                              @RequestParam(value ="_page",required = false)Integer pageNo) {
 
-          List<Organizer> output = null;
-          Integer organizerSize = organizerService.getOrganizerSize();
+          Page<Organizer> pageOutput = organizerService.getAllOrganizers(itemNo, pageNo);
+
           HttpHeaders responseHeader = new HttpHeaders();
-          responseHeader.set("x-total-count",String.valueOf(organizerSize));
+          responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
 
-          try{
-               output = organizerService.getAllOrganizers(itemNo,pageNo);
-               return new ResponseEntity<>(output,responseHeader, HttpStatus.OK) ;
-
-          }catch(IndexOutOfBoundsException ex){
-               return new ResponseEntity<>(output, responseHeader,HttpStatus.OK);
-          }
+         return new ResponseEntity<>(pageOutput.getContent(),responseHeader,HttpStatus.OK);
 
      }
 
@@ -48,6 +41,11 @@ public class OrganizerController {
           }else
           { throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");}
 
+     }
+     @PostMapping("/organizers")
+     public ResponseEntity<?> addOrganizer(@RequestBody Organizer organizer){
+          Organizer output = organizerService.createOrganizer(organizer);
+          return ResponseEntity.ok(output);
      }
 
 }
