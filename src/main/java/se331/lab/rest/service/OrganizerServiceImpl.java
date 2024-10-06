@@ -2,6 +2,8 @@ package se331.lab.rest.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se331.lab.rest.dao.EventDao;
 import se331.lab.rest.dao.OrganizerDao;
@@ -15,24 +17,15 @@ public class OrganizerServiceImpl implements OrganizerService {
     final OrganizerDao organizerDao;
 
 
-
     @Override
-    public Organizer getOrganizer(Long organizerId) {
-        return organizerDao.getOrganizer(organizerId);
+    public List<Organizer> getAllOrganizer() {
+        return organizerDao.getOrganizer(Pageable.unpaged()).getContent();
     }
 
     @Override
-    public Page<Organizer> getAllOrganizers(Integer ItemNo, Integer pageNo) {
-        return organizerDao.getAllOrganizers(ItemNo,pageNo);
+    public Page<Organizer> getOrganizer(Integer page, Integer pageSize) {
+        return organizerDao.getOrganizer(PageRequest.of(page, pageSize));
     }
 
-    @Override
-    public Integer getOrganizerSize() {
-        return organizerDao.getOrganizerSize();
-    }
 
-    @Override
-    public Organizer createOrganizer(Organizer organizer) {
-        return organizerDao.createOrganizer(organizer);
-    }
 }

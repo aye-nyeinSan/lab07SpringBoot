@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import se331.lab.rest.entity.Event;
 import org.springframework.stereotype.Controller;
 import se331.lab.rest.service.EventService;
+import se331.lab.rest.util.LabMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,14 @@ public class EventController  {
     public ResponseEntity<?> getEventsLists(@RequestParam(value ="_limit",required = false) Integer perPage,
                                             @RequestParam(value ="_page",required = false)Integer page) {
 
+
         Page<Event> pageOutput = eventService.getEvents(perPage,page);
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
+
+
         return
-                new ResponseEntity<>(pageOutput.getContent(),responseHeader,HttpStatus.OK);
+                new ResponseEntity<>(LabMapper.INSTANCE.getEventDto(pageOutput.getContent()),responseHeader,HttpStatus.OK);
 
 
 
@@ -37,7 +41,7 @@ public class EventController  {
     public ResponseEntity<?> getEvent(@PathVariable("id") Long id){
        Event output = eventService.getEvent(id);
         if(output != null){
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok(LabMapper.INSTANCE.getEventDto(output));
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");
         }
@@ -46,6 +50,6 @@ public class EventController  {
     @PostMapping("/events")
     public ResponseEntity<?> addEvent(@RequestBody Event event){
         Event output = eventService.save(event);
-        return ResponseEntity.ok(output);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getEventDto(output));
     }
 }

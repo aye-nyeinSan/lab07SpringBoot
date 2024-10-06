@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import se331.lab.rest.entity.Event;
 import se331.lab.rest.entity.Organizer;
 import se331.lab.rest.service.OrganizerService;
+import se331.lab.rest.util.LabMapper;
 
 import java.util.List;
 
@@ -19,33 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrganizerController {
      final OrganizerService organizerService;
-
-     @GetMapping("organizers")
-     public ResponseEntity<?> getAllOrganizers(@RequestParam(value ="_limit",required = false) Integer itemNo,
-                                             @RequestParam(value ="_page",required = false)Integer pageNo) {
-
-          Page<Organizer> pageOutput = organizerService.getAllOrganizers(itemNo, pageNo);
-
-          HttpHeaders responseHeader = new HttpHeaders();
-          responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
-
-         return new ResponseEntity<>(pageOutput.getContent(),responseHeader,HttpStatus.OK);
-
+     @GetMapping("/organizers")
+     ResponseEntity<?> getOrganizers()
+     {
+          return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDTO(organizerService.getAllOrganizer()));
      }
 
-     @GetMapping("organizers/{id}")
-     public ResponseEntity<?> getOrganizer(@PathVariable("id") long id) {
-          Organizer output = organizerService.getOrganizer(id);
-          if(output != null){
-               return new ResponseEntity<>(output,HttpStatus.OK);
-          }else
-          { throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The given id is not found");}
 
-     }
-     @PostMapping("/organizers")
-     public ResponseEntity<?> addOrganizer(@RequestBody Organizer organizer){
-          Organizer output = organizerService.createOrganizer(organizer);
-          return ResponseEntity.ok(output);
-     }
 
 }
