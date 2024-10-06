@@ -1,21 +1,15 @@
 package se331.lab.rest.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizerOwnEventsDTO {
-
+public class ParticipantEventDTO {
     Long id;
     String category;
     String title;
@@ -24,7 +18,5 @@ public class OrganizerOwnEventsDTO {
     String date;
     String time;
     Boolean petAllowed;
-    List<Participant> participants = new ArrayList<>();
-
 
 }
