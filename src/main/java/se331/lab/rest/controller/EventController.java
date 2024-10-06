@@ -25,7 +25,10 @@ public class EventController  {
                                             @RequestParam(value ="_page",required = false)Integer page) {
 
 
+
         Page<Event> pageOutput = eventService.getEvents(perPage,page);
+        System.out.println("PagePoutput === "+pageOutput.getContent());
+
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
 
