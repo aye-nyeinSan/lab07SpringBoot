@@ -1,13 +1,13 @@
 package se331.lab.rest.dao;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import se331.lab.rest.entity.Organizer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrganizerDao {
-    Organizer getOrganizer(Long organizerId);
-    Page<Organizer> getAllOrganizers(Integer ItemNo, Integer pageNo);
-    Integer getOrganizerSize();
-    Organizer createOrganizer(Organizer organizer);
+   Page<Organizer> getOrganizer(Pageable pageable);
+   Optional<Organizer> findById(Long id);
 }
