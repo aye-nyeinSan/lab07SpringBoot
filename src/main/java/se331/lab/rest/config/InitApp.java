@@ -93,6 +93,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
        tempEvent.setOrganizer(org3);
        org3.getOwnEvents().add(tempEvent);
        tempEvent.setParticipants(List.of(p2,p5,p4));
+       p2.getEventHistory().add(tempEvent);
+       p5.getEventHistory().add(tempEvent);
+       p4.getEventHistory().add(tempEvent);
     }
 
     @Override
