@@ -21,7 +21,4 @@ public interface LabMapper {
     ParticipantDTO getParticipantDTO(Participant participant);
     List<ParticipantDTO> getParticipantDTO(List<Participant> participants);
 
-
-
-
 }
