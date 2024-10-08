@@ -13,13 +13,16 @@ import se331.lab.rest.util.LabMapper;
 @RequiredArgsConstructor
 public class ParticipantController {
     final ParticipantService participantService;
+    
     @GetMapping("/participants")
     ResponseEntity<?> getParticipants()
     {
 
+
         return
                 ResponseEntity.ok(
                        LabMapper.INSTANCE.getParticipantDTO(participantService.getAllParticipants()) );
+
     }
 
 }

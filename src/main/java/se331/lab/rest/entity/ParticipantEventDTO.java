@@ -19,4 +19,5 @@ public class ParticipantEventDTO {
     String date;
     String time;
     Boolean petAllowed;
+
 }
