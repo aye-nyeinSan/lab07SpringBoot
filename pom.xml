@@ -29,6 +29,7 @@
     <properties>
         <java.version>22</java.version>
         <org.mapstruct.version>1.6.0</org.mapstruct.version>
+        <google.cloud.version>2.43.1</google.cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -41,6 +42,11 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${org.mapstruct.version}</version>
             <scope> provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+            <version>${google.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
