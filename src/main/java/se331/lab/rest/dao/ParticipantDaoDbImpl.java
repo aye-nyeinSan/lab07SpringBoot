@@ -18,6 +18,7 @@ public class ParticipantDaoDbImpl implements ParticipantDao{
 
     @Override
     public Page<Participant> getParticipants(Pageable pageable) {
+
         return participantRepository.findAll(pageable);
     }
 }

@@ -22,7 +22,9 @@ public class EventDTO {
     String date;
     String time;
     Boolean petAllowed;
+
     EventOrganizerDTO organizer;
     @Builder.Default
+
     List<EventParticipantDTO> participants = new ArrayList<>();
 }
