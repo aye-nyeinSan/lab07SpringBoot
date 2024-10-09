@@ -2,10 +2,12 @@ package se331.lab.rest.controller;
 
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import se331.lab.rest.util.CloudStorageHelper;
 
@@ -20,5 +22,9 @@ public class BucketController {
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, ServletException {
         return ResponseEntity.ok(this.cloudStorageHelper.getImageUrl(file,"gs://imageupload-5cb78.appspot.com"));
 
+    }
+    @PostMapping("/uploadImage")
+    public ResponseEntity<?> uploadFileComponent(@RequestPart(value = "image") MultipartFile file) throws IOException, ServletException {
+        return ResponseEntity.ok(this.cloudStorageHelper.getStorageFileDto(file,"gs://imageupload-5cb78.appspot.com"));
     }
 }
