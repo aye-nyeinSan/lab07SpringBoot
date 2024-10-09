@@ -5,6 +5,7 @@ import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import jakarta.servlet.ServletException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,7 @@ public class CloudStorageHelper {
     static {
         InputStream serviceAccount = null;
         try{
-            serviceAccount = new ClassPathResource("./googleCloudKeys").getInputStream();
+            serviceAccount = new ClassPathResource("util/googleCloudKeys.json").getInputStream();
             storage = StorageOptions.newBuilder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setProjectId("imageupload-5cb78")
@@ -58,8 +59,21 @@ public class CloudStorageHelper {
 
     }
 
-    public String getImageUrl(MultipartFile file,final String bucket) throws IOException, Servletexpection{
-
+    public String getImageUrl(MultipartFile file,final String bucket)
+            throws IOException,  ServletException {
+        final String fileName = file.getOriginalFilename();
+        //check extension of file
+        if(fileName != null && !fileName.isEmpty() && fileName.contains(".")){
+            final String extension = fileName.substring(fileName.lastIndexOf('.')+1);
+            String [] allowedExt = {"jpg","jpeg","png","gif"};
+            for (String s : allowedExt){
+                if(extension.equals(s)){
+                    return this.uploadFile(file,bucket);
+                }
+            }
+            throw new ServletException("file must be an image");
+        }
+        return null;
     }
 }
 
