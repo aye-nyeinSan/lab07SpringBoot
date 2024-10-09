@@ -32,7 +32,7 @@ public class EventController  {
         Page<Event> pageOutput ;
         if(title == null) {
            pageOutput = eventService.getEvents(perPage,page);
-        System.out.println("PagePoutput === "+pageOutput.getContent());
+       // System.out.println("PagePoutput === "+pageOutput.getContent());
         }
         else {
             pageOutput = eventService.getEvents(title, PageRequest.of(page -1,perPage));

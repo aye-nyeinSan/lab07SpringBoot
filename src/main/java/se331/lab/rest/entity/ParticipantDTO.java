@@ -17,5 +17,7 @@ public class ParticipantDTO {
     String name;
     String tellNo;
 
-    List<ParticipantEventDTO> ownEvents = new ArrayList<>();
+    @Builder.Default
+    List<ParticipantEventDTO> eventHistory  = new ArrayList<>();
+
 }
