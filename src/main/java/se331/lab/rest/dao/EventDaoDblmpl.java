@@ -39,6 +39,6 @@ public class EventDaoDblmpl implements EventDao{
 
     @Override
     public Page<Event> getEvents(String title, Pageable page) {
-        return eventRepository.findByTitleContainingOrDescriptionContainingOrOrganizer_NameContaining(title,title,title,page);
+        return eventRepository.findByTitleContaining(title,page);
     }
 }
