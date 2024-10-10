@@ -4,6 +4,12 @@ spring:
       - db
   application:
     name: 331-backend
+  security:
+    jwt:
+      secret-key: 4b01cadfc23472033c63b96b233992d5352b7494bdcc04a3be1980bd9a8a5f725f5d76d1f7aea0ef9236c583ee96a8b89b3751e6b34ea8340ce2c95af82969c8a8577b4a2a767a3d93b756e1f6990bbaba78c1755504c5153d07b52658dadbd1c7a4d0b667124f7b5058d88edaad45963a59c9007774ffe068ccee619f29f508cbf512e466d666160e97e43fb4ca387d3a70649f035ae15799ffcc988c7d775069a08ddca6f2a98ccf9c2e23bdad1d5d11471538cc09346f2e312746425c80a0bac75306e1cb596d2a581cfe6358766125b084d9ff31c5dbcf989a5401cce025db85bc84217fa0846a9bbd37a2166dcb35aa26561950b763a48bcdd405201d79
+      expiration: 86400000 #a day
+      refresh-token:
+        expiration: 604800000 #7days
 
   datasource:
     url: jdbc:mysql://localhost:3307/selabdb?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true
