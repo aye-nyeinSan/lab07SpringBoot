@@ -33,7 +33,8 @@ public class SecurityConfiguration {
 
               authorize.requestMatchers("api/v1/auth/**").permitAll()
                       .requestMatchers(HttpMethod.GET,"/events").permitAll()
-                      .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                      .requestMatchers(HttpMethod.GET,"/organizers").permitAll()
+                      .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll() //allow everybody to see list of events
                       .anyRequest().authenticated();
             })
 
