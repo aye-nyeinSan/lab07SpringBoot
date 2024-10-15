@@ -21,4 +21,6 @@ public interface LabMapper {
     ParticipantDTO getParticipantDTO(Participant participant);
     List<ParticipantDTO> getParticipantDTO(List<Participant> participants);
 
+    @Mapping(target="roles",source="user.roles")
+    OrganizerAuthDTO getOrganizerAuthDTO(Organizer organizer);
 }
