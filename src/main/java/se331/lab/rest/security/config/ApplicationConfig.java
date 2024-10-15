@@ -23,8 +23,13 @@ public class ApplicationConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> repository.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            .map(user -> {
+              System.out.println("User found: " + user.getUsername() + " with password hash: " + user.getPassword());
+              return user;
+            })
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
   }
+
 
   @Bean
   public AuthenticationProvider authenticationProvider() {

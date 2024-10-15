@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se331.lab.rest.security.config.JwtService;
@@ -51,23 +52,44 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
-    authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                    request.getUsername(),
-                    request.getPassword()
-            )
-    );
+    try {
+
+      Authentication result = authenticationManager.authenticate(
+              new UsernamePasswordAuthenticationToken(
+                      request.getUsername(),
+                      request.getPassword()
+              )
+      );
+      System.out.println(result);
+
+      System.out.println("Authentication successful for user: " + request.getUsername());
+    } catch (Exception e) {
+      System.out.println("Authentication failed: " + e.getMessage());
+      return null;  // Return null if authentication fails
+    }
     User user = repository.findByUsername(request.getUsername())
             .orElseThrow();
+    System.out.println("User found: " + user);
 
     String jwtToken = jwtService.generateToken(user);
     String refreshToken = jwtService.generateRefreshToken(user);
+
+    System.out.println("Generated JWT token: " + jwtToken);
+    System.out.println("Generated refresh token: " + refreshToken);
+
 //    revokeAllUserTokens(user);
+
+
     saveUserToken(user, jwtToken);
-    return AuthenticationResponse.builder()
+    System.out.println("User token saved.");
+
+    AuthenticationResponse response = AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
             .build();
+    System.out.println("Authentication response: " + response);
+    return response;
+
   }
 
   private void saveUserToken(User user, String jwtToken) {
