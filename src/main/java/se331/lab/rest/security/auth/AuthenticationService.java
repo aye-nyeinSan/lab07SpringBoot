@@ -19,6 +19,7 @@ import se331.lab.rest.security.token.TokenType;
 import se331.lab.rest.security.user.Role;
 import se331.lab.rest.security.user.User;
 import se331.lab.rest.security.user.UserRepository;
+import se331.lab.rest.util.LabMapper;
 
 
 import java.io.IOException;
@@ -86,6 +87,7 @@ public class AuthenticationService {
     AuthenticationResponse response = AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .user(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))
             .build();
     System.out.println("Authentication response: " + response);
     return response;
