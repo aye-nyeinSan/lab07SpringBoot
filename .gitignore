@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-/util/googleCloudKeys.json
+/resources/googleCloudKeys.json
