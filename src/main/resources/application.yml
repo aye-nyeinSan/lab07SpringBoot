@@ -1,18 +1,9 @@
 spring:
+  application:
+    name: 331-backend
   profiles:
     active:
       - db
-  application:
-    name: 331-backend
-    security:
-      jwt:
-        secret-key: 3b30d9ca013863a02f7b41402cc6286f3dfbd76baad8136dcafa6d9e8e4a9b6b877a9c099c7ac2833efb9b127b532ba3726319680848d8e1c089779dfe8194d3c2454080d9147d945d01d94cd5189ecc84857e6cf95f4dc822d314b28026d5fffd11cee530ae41ada92d2c7106c6445b020173dae9cc7e2ae9fa1c98e365855eea3fa747ba9ec2116969b42c69909a74cc77ad4ed116aaefaea87647309e29b0b36e676280e14bf537b9d4c2e7e5e02db2caaadf805fe2a82e88c3776469f4f9d9b2aa558f887c9e6806aae41f8f06d5b2ab10f3a52563a4031706bd14a09f9a3bfda379bd3313425b8e2f47335bcea48391d2673c1072d11d0cb879c34097d0
-        expiration: 86400000
-        refresh-token:
-          expiration: 604800000
-
-
-
   datasource:
     url: jdbc:mysql://localhost:3307/selabdb?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,3 +18,10 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+application:
+  security:
+    jwt:
+      secret-key: 3b30d9ca013863a02f7b41402cc6286f3dfbd76baad8136dcafa6d9e8e4a9b6b877a9c099c7ac2833efb9b127b532ba3726319680848d8e1c089779dfe8194d3c2454080d9147d945d01d94cd5189ecc84857e6cf95f4dc822d314b28026d5fffd11cee530ae41ada92d2c7106c6445b020173dae9cc7e2ae9fa1c98e365855eea3fa747ba9ec2116969b42c69909a74cc77ad4ed116aaefaea87647309e29b0b36e676280e14bf537b9d4c2e7e5e02db2caaadf805fe2a82e88c3776469f4f9d9b2aa558f887c9e6806aae41f8f06d5b2ab10f3a52563a4031706bd14a09f9a3bfda379bd3313425b8e2f47335bcea48391d2673c1072d11d0cb879c34097d0
+      expiration: 86400000 # 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
