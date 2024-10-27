@@ -43,10 +43,11 @@ public class AuthenticationService {
             .roles(List.of(Role.ROLE_USER))
             .build();
     var savedUser = repository.save(user);
+
     var jwtToken = jwtService.generateToken(user);
-    System.out.println(jwtToken);
+    System.out.println("JwtToken from register:"+ jwtToken);
     var refreshToken = jwtService.generateRefreshToken(user);
-    System.out.println(refreshToken);
+    System.out.println("RefreshToken:"+ refreshToken);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
              .accessToken(jwtToken)
@@ -67,14 +68,14 @@ public class AuthenticationService {
             .orElseThrow();
 
     String jwtToken = jwtService.generateToken(user);
+    System.out.println("jwtToken from authenticate: " + jwtToken);
     String refreshToken = jwtService.generateRefreshToken(user);
 //    revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
-            .user(LabMapper.INSTANCE.getOrganizerAuthDTO(user.getOrganizer()))
-            .build();
+            .user(LabMapper.INSTANCE.getOrganizerAuthDTO(user.getOrganizer())).build();
   }
 
   private void saveUserToken(User user, String jwtToken) {

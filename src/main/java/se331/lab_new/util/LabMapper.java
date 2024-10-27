@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import se331.lab_new.entity.*;
+import se331.lab_new.security.user.User;
 
 import java.util.List;
 
@@ -23,5 +24,8 @@ public interface LabMapper {
 
     @Mapping(target="roles",source = "user.roles")
     OrganizerAuthDTO getOrganizerAuthDTO(Organizer organizer);
+
+    @Mapping(target="roles",source = "user.roles")
+    UserAuthDTO getUserAuthDTO(User user);
 
 }
